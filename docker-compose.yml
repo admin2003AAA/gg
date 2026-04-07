@@ -1,12 +1,13 @@
-version: '3.8'
+version: '3.9'
+
 services:
-  iraq-bot:
+  bot:
     build: .
-    container_name: iraq_data_bot
+    container_name: file_indexer_bot
     restart: unless-stopped
+    env_file: .env
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
-      - ./.env:/app/.env
     environment:
-      - TZ=Asia/Baghdad
+      - TZ=UTC
