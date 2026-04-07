@@ -43,11 +43,11 @@ async def cmd_files(update: Update, ctx: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(part, parse_mode="Markdown")
 
 
-def _human_size(n: int) -> str:
+def _human_size(n: float) -> str:
     for unit in ("B", "KB", "MB", "GB"):
         if n < 1024:
             return f"{n:.0f} {unit}"
-        n /= 1024  # type: ignore[assignment]
+        n /= 1024
     return f"{n:.1f} TB"
 
 

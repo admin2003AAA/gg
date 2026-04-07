@@ -11,6 +11,8 @@ from typing import Any, Dict, List, Optional
 import aiosqlite
 from loguru import logger
 
+_MAX_SEARCH_TEXT_LEN = 500_000  # characters stored per file in FTS index
+
 
 _DDL = """
 PRAGMA journal_mode = WAL;
@@ -124,7 +126,7 @@ class DatabaseManager:
             # Insert into FTS
             await db.execute(
                 "INSERT INTO content_fts (filename, search_text, file_id) VALUES (?, ?, ?)",
-                (filename, search_text[:500_000], file_id),
+                (filename, search_text[:_MAX_SEARCH_TEXT_LEN], file_id),
             )
             await db.commit()
         return file_id

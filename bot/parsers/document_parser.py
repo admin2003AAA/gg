@@ -99,14 +99,9 @@ class DocxParser(BaseParser):
 
 def _parse_docx(path: Path) -> tuple:
     try:
-        import docx as python_docx  # optional, package name differs from import
-    except ImportError:
-        try:
-            from docx import Document  # type: ignore
-        except ImportError as e:
-            raise RuntimeError("python-docx not installed — DOCX parsing unavailable") from e
-    else:
-        from docx import Document  # type: ignore  # noqa: F811
+        from docx import Document  # type: ignore  # python-docx package
+    except ImportError as e:
+        raise RuntimeError("python-docx not installed — DOCX parsing unavailable") from e
 
     doc = Document(str(path))
     paragraphs = [p.text for p in doc.paragraphs if p.text.strip()]
